@@ -1,0 +1,14 @@
+*** Settings ***
+Library    OperatingSystem
+
+*** Test Cases ***
+Get Exam Results
+    ${json_content}=    Get File    ${EXAM_RESULTS_JSON}
+    &{results}=    Evaluate    json.loads('''${json_content}''')    json
+    Log To Console    ${\n}    no_newline=True
+    FOR    ${student}    ${results}    IN    &{results}
+        Log To Console    ${student}: ${results}
+    END
+
+*** Variables ***
+${EXAM_RESULTS_JSON}    ${CURDIR}${/}test_data${/}exam_results.json
